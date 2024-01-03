@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/python3
 """
 This module contains a function to return the pascal triangle of a given size
 """
