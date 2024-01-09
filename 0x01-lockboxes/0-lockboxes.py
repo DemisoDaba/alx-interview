@@ -6,8 +6,6 @@ Checks if all the boxes in a list can be unlocked.
 def canUnlockAll(boxes):
     if not boxes or len(boxes) == 1:
         return True
-
-    # Initiate keys, unlocked boxes, and track visited boxes
     keys = set(boxes[0])
     unlocked = {0}
     visited = set()
