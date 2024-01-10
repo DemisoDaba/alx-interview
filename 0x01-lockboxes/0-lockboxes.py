@@ -4,11 +4,6 @@ Checks if all the boxes in a list can be unlocked.
 """
 
 def canUnlockAll(boxes):
-    """This function takes a list of lists as argument
-        and every list presents a box containing keys
-        that can open other boxes
-        and it returns true if all the boxes
-        can be opened and false otherwise"""
 
     keys = {i: box for i, box in enumerate(boxes)}
     keysSet = {0}
