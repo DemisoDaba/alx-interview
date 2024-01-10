@@ -3,19 +3,16 @@
 Checks if all the boxes in a list can be unlocked.
 """
 
-from collections import deque
+def canUnlockAll(boxes):
 
-def canUnlockAll(boxes_to_check):
-    total_boxes = len(boxes_to_check)
-    unlocked_boxes = [False] * total_boxes
-    unlocked_boxes[0] = True
-    queue = deque([0])
-    
-    while queue:
-        current_box = queue.popleft()
-        for key in boxes_to_check[current_box]:
-            if key < total_boxes and not unlocked_boxes[key]:
-                unlocked_boxes[key] = True
-                queue.append(key)
-                
-    return all(unlocked_boxes)
+    keys = {i: box for i, box in enumerate(boxes)}
+    keysSet = {0}
+    canOpen = True
+    for key, value in keys.items():
+        for val in value:
+            if (val != key):
+                keysSet.add(val)
+    for key, value in keys.items():
+        if (key not in keysSet):
+            canOpen = False
+    return canOpen
