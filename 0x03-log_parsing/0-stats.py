@@ -3,26 +3,48 @@
 and prints total file size and status code count after 
 every 10 lines or keyboard interruption"""
 
-from sys import stdin
+import sys
+import re
 
-try:
-    my_dict = {}
-    total_size = 0
-    for i, line in enumerate(stdin, start=1):
-        parts = line.strip().split(" ")
-        total_size += int(parts[-1])
-        if parts[-2] not in my_dict:
-            my_dict[parts[-2]] = 1
-        else:
-            my_dict[parts[-2]] += 1
-        my_dict = dict(sorted(my_dict.items()))
-        if i % 10 == 0:
-            print("File size: {}".format(total_size))
-            for key, val in my_dict.items():
-                print("{}: {}".format(key, val))
-            total_size = 0
-            my_dict = {}
-except KeyboardInterrupt:
-    print("File size: {}".format(total_size))
-    for key, val in my_dict.items():
-        print("{}: {}".format(key, val))
+
+def display_stats(log: dict) -> None:
+    """
+    Helper function to display statistics
+    """
+    print(f"File size: {log['file_size']}")
+    for code in sorted(log['code_frequency']):
+        if log['code_frequency'][code]:
+            print(f"{code}: {log['code_frequency'][code]}")
+
+
+if __name__ == "__main__":
+    regex_pattern = re.compile(
+        r'\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3} - \[\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}.\d+\] "GET /projects/260 HTTP/1.1" (.{3}) (\d+)'
+    )
+
+    line_count = 0
+    log = {
+        "file_size": 0,
+        "code_frequency": {str(code): 0 for code in [200, 301, 400, 401, 403, 404, 405, 500]},
+    }
+
+    try:
+        for line in sys.stdin:
+            line = line.strip()
+            match = regex_pattern.fullmatch(line)
+            if match:
+                line_count += 1
+                code = match.group(1)
+                file_size = int(match.group(2))
+
+                # File size
+                log["file_size"] += file_size
+
+                # Status code
+                if code.isdecimal():
+                    log["code_frequency"][code] += 1
+
+                if line_count % 10 == 0:
+                    display_stats(log)
+    finally:
+        display_stats(log)
