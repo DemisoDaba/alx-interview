@@ -1,21 +1,22 @@
 #!/usr/bin/python3
-""" Minimum Operations
-    """
+"""This module defines the function minOperations"""
 
 
-def minOperations(n: int) -> int:
-    """ Minimum Operations needed to get n H characters """
-    next = 'H'
-    body = 'H'
-    op = 0
-    while (len(body) < n):
-        if n % len(body) == 0:
-            op += 2
-            next = body
-            body += body
-        else:
-            op += 1
-            body += next
-    if len(body) != n:
+def minOperations(h):
+    """This function takes as argument
+        h: number of H characters that should be printed
+        and returns the number of operations to achieve that"""
+    if not isinstance(h, int) or h <= 0:
         return 0
-    return op
+    copy_var = 1
+    rep_var = 1
+    op_count = 0
+    while rep_var < h:
+        if h % rep_var == 0:
+            copy_var = rep_var
+            rep_var *= 2
+            op_count += 2
+        else:
+            rep_var += copy_var
+            op_count += 1
+    return op_count
