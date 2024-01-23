@@ -3,48 +3,34 @@
 and prints total file size and status code count after 
 every 10 lines or keyboard interruption"""
 
-import sys
-import re
+from sys import stdin
 
-
-def display_stats(log: dict) -> None:
-    """
-    Helper function to display statistics
-    """
-    print(f"File size: {log['file_size']}")
-    for code in sorted(log['code_frequency']):
-        if log['code_frequency'][code]:
-            print(f"{code}: {log['code_frequency'][code]}")
-
-
-if __name__ == "__main__":
-    regex_pattern = re.compile(
-        r'\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3} - \[\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}.\d+\] "GET /projects/260 HTTP/1.1" (.{3}) (\d+)'
-    )
-
-    line_count = 0
-    log = {
-        "file_size": 0,
-        "code_frequency": {str(code): 0 for code in [200, 301, 400, 401, 403, 404, 405, 500]},
-    }
-
+def parse_line(line):
     try:
-        for line in sys.stdin:
-            line = line.strip()
-            match = regex_pattern.fullmatch(line)
-            if match:
-                line_count += 1
-                code = match.group(1)
-                file_size = int(match.group(2))
+        parts = line.strip().split(" ")
+        ip, status, size = parts[0], int(parts[-2]), int(parts[-1])
+        return ip, status, size
+    except (ValueError, IndexError):
+        return None
 
-                # File size
-                log["file_size"] += file_size
+try:
+    total_size, status_count = 0, {200:0, 301:0, 400:0, 401:0, 403:0, 404:0, 405:0, 500:0}
 
-                # Status code
-                if code.isdecimal():
-                    log["code_frequency"][code] += 1
+    for i, line in enumerate(stdin, start=1):
+        parsed_line = parse_line(line)
+        if parsed_line:
+            ip, current_status, current_size = parsed_line
+            total_size += current_size
+            status_count[current_status] = status_count.get(current_status, 0) + 1
 
-                if line_count % 10 == 0:
-                    display_stats(log)
-    finally:
-        display_stats(log)
+            if i % 10 == 0:
+                print(f"Total file size: {total_size}")
+                for code in sorted(status_count):
+                    if status_count[code] > 0:
+                        print(f"{code}: {status_count[code]}")
+
+except KeyboardInterrupt:
+    print(f"Total file size: {total_size}")
+    for code in sorted(status_count):
+        if status_count[code] > 0:
+            print(f"{code}: {status_count[code]}")
