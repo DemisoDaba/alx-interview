@@ -6,17 +6,23 @@ every 10 lines or keyboard interruption"""
 from sys import stdin
 
 try:
-    code_count, size_total = {}, 0
+    my_dict = {}
+    total_size = 0
     for i, line in enumerate(stdin, start=1):
         parts = line.strip().split(" ")
-        size_total += int(parts[-1])
-        code_count[parts[-2]] = code_count.get(parts[-2], 0) + 1
+        total_size += int(parts[-1])
+        if parts[-2] not in my_dict:
+            my_dict[parts[-2]] = 1
+        else:
+            my_dict[parts[-2]] += 1
+        my_dict = dict(sorted(my_dict.items()))
         if i % 10 == 0:
-            print(f"File size: {size_total}")
-            for key, val in sorted(code_count.items()):
-                print(f"{key}: {val}")
-            size_total, code_count = 0, {}
+            print("File size: {}".format(total_size))
+            for key, val in my_dict.items():
+                print("{}: {}".format(key, val))
+            total_size = 0
+            my_dict = {}
 except KeyboardInterrupt:
-    print(f"File size: {size_total}")
-    for key, val in code_count.items():
-        print(f"{key}: {val}")
+    print("File size: {}".format(total_size))
+    for key, val in my_dict.items():
+        print("{}: {}".format(key, val))
