@@ -2,8 +2,6 @@
 
 This repository contains materials related to interviews at ALX, tailored for students of the ALX Software Engineering program.
 
-
-
 ## Table of Contents
 
 - [Folder Structure](#folder-structure)
