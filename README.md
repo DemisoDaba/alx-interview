@@ -20,6 +20,7 @@ This repository contains materials related to interviews at ALX, tailored for st
 | [0x04-utf8_validation](./0x04-utf8_validation)             | Contains materials related to the UTF-8 Validation interview question. |
 | [0x05-nqueens](./0x05-nqueens)                             | Contains materials related to the N-Queens interview question. |
 | [0x06-starwars_api](./0x06-starwars_api)                   | Contains materials related to the Star Wars API interview question. |
+| [0x07-rotate_2d_matrix](./0x07-rotate_2d_matrix)           | Contains materials related to the Rotate 2D Matrix interview question. |
 
 ## Usage
 
