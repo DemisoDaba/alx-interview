@@ -7,7 +7,7 @@ def makeChange(coins, total):
     If total <= 0, return 0.
     If total can't be met by coins, return -1.
     """
-       if not coins or coins is None:
+    if not coins or coins is None:
         return -1
     if total <= 0:
         return 0
