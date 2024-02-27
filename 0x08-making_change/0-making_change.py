@@ -2,15 +2,20 @@
 """0-making_change.py"""
 
 def makeChange(coins, total):
-    if total < 0:
+    """
+    Returns: Fewest coins for total. 
+    If total ≤ 0, return 0. If total can't be met, return -1.
+    """
+    if not coins or coins is None:
+        return -1
+    if total <= 0:
         return 0
-
-    coins.sort(reverse=True)
-    num_coins = 0
-
+    change = 0
+    coins = sorted(coins)[::-1]
     for coin in coins:
-        if coin <= total:
-            num_coins += total // coin
-            total %= coin
-
-    return num_coins if total == 0 else -1
+        while coin <= total:
+            total -= coin
+            change += 1
+        if (total == 0):
+            return change
+    return -1
