@@ -3,8 +3,9 @@
 
 def makeChange(coins, total):
     """
-    Returns: Fewest coins for total. 
-    If total ≤ 0, return 0. If total can't be met, return -1.
+    Returns fewest coins needed to meet total.
+    If total <= 0, return 0.
+    If total can't be met by coins, return -1.
     """
     if not coins or coins is None:
         return -1
@@ -16,6 +17,6 @@ def makeChange(coins, total):
         while coin <= total:
             total -= coin
             change += 1
-        if (total == 0):
+        if total == 0:
             return change
     return -1
