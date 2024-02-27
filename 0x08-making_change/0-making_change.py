@@ -1,10 +1,6 @@
 #!/usr/bin/python3
 """0-making_change.py"""
 
-#!/usr/bin/python3
-"""Change making module.
-"""
-
 def makeChange(coins, total):
     """
     MakeChange function
