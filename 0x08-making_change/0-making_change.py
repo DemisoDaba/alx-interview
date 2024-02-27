@@ -1,22 +1,21 @@
 #!/usr/bin/python3
 """0-making_change.py"""
-import sys
+import math
 def makeChange(coins, total):
     """
     MakeChange function
     """
-    if total <= 0:
+    n = 0
+    coins.sort(reverse=True)
+    if total < 0:
         return 0
 
-    res = [sys.maxsize for i in range(total + 1)]
-    res[0] = 0
+    for coin in coins:
+        if total % coin <= total:
+            n += math.trunc(total / coin)
+            total %= coin
 
-    for i in coins:
-        for j in range(i, total + 1):
+    if total == 0:
+        return n
 
-            res[j] = min(res[j], res[j - i] + 1)
-
-    if res[total] == sys.maxsize:
-        return -1
-
-    return res[total]
+    return -1
