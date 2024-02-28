@@ -6,10 +6,8 @@
 
 def makeChange(coins, total):
     """
-    this function takes as arguments
-        coins: list of coins
-        total: the amout to meet using these coins
-    and return the fewest number of coins needed to reach total
+    Args: coins (list), total (int)
+    Returns: fewest coins needed (int)
     """
 
     if total <= 0:
