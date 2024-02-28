@@ -4,16 +4,25 @@
 """
 
 
-def makeChange(coins, amount):
-    if amount == 0:
+def makeChange(coins, total):
+    """
+    this function takes as arguments
+        coins: list of coins
+        total: the amout to meet using these coins
+    and return the fewest number of coins needed to reach total
+    """
+
+    if total <= 0:
         return 0
-    amounts = [float("inf")] * (amount + 1)
-    amounts[0] = 0
+
+    number_coins = 0
+    coins.sort(reverse=True)
 
     for coin in coins:
-        for i in range(coin, amount + 1):
-            amounts[i] = min(amounts[i], amounts[i - coin] + 1)
-    if amounts[amount] != float("inf"):
-        return amounts[amount]
-    else:
-        return -1
+        while coin <= total:
+            total -= coin
+            number_coins += 1
+
+    if total == 0:
+        return number_coins
+    return -1
