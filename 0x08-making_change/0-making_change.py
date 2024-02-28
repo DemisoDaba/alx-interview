@@ -1,22 +1,19 @@
 #!/usr/bin/python3
-"""0-making_change.py"""
+"""
+0-making_change.py
+"""
 
-def makeChange(coins, total):
-    """
-    Returns fewest coins needed to meet total.
-    If total <= 0, return 0.
-    If total can't be met by coins, return -1.
-    """
-    if not coins or coins is None:
-        return -1
-    if total <= 0:
+
+def makeChange(coins, amount):
+    if amount == 0:
         return 0
-    change = 0
-    coins = sorted(coins)[::-1]
+    amounts = [float("inf")] * (amount + 1)
+    amounts[0] = 0
+
     for coin in coins:
-        while coin <= total:
-            total -= coin
-            change += 1
-        if total == 0:
-            return change
-    return -1
+        for i in range(coin, amount + 1):
+            amounts[i] = min(amounts[i], amounts[i - coin] + 1)
+    if amounts[amount] != float("inf"):
+        return amounts[amount]
+    else:
+        return -1
