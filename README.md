@@ -22,6 +22,8 @@ This repository contains materials related to interviews at ALX, tailored for st
 | [0x06-starwars_api](./0x06-starwars_api)                   | Contains materials related to the Star Wars API interview question. |
 | [0x07-rotate_2d_matrix](./0x07-rotate_2d_matrix)           | Contains materials related to the Rotate 2D Matrix interview question. |
 | [0x08-making_change](./0x08-making_change)                 | Implement makeChange function for coin change calculation |
+| [0x09-island_perimeter](./0x09-island_perimeter)           | a function def island_perimeter(grid): that returns the perimeter of |
+| [0x0A-primegame](./0x0A-primegame)                         | Added Prime Game solution with optimal play simulation and winner determination |
 
 ## Usage
 
@@ -35,4 +37,4 @@ Before contributing, please review our [contribution guidelines](CONTRIBUTING.md
 
 ## License
 
-This repository is licensed under the [MIT License](LICENSE).
+This repository is licensed under the [MIT License](LICENSE)
