@@ -24,19 +24,6 @@ def isPrime(n):
     return True
 
 
-def primeCountInRange(n):
-    """
-    Computes the number of prime numbers in the given range n
-
-    Return: Number of prime number's between 1 and n
-    """
-    primeCount = 0
-    for i in range(2, n + 1):
-        if isPrime(i):
-            primeCount += 1
-    return primeCount
-
-
 def isWinner(x, nums):
     """
         @params:
@@ -60,10 +47,21 @@ def isWinner(x, nums):
     for round in range(x):
         if nums[round] <= 0:
             return None
-        if primeCountInRange(nums[round]) % 2 == 0:
-            benPoints += 1
-        else:
-            mariaPoints += 1
+        moves = 0
+        while True:
+            sets = [x for x in range(1, nums[round] + 1) if x not in previous]
+            if not any([isPrime(x) for x in sets]):
+                previous = []
+                if moves == 0 or moves % 2 == 0:
+                    benPoints += 1
+                else:
+                    mariaPoints += 1
+                break
+            if any([isPrime(x) for x in sets]):
+                n = next(x for x in sets if isPrime(x))
+                previous.append(n)
+                previous.extend([x for x in sets if x % n == 0 and x != n])
+                moves += 1
 
     if benPoints == 0 and mariaPoints == 0:
         return 'Ben'
